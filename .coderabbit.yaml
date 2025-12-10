@@ -1,0 +1,24 @@
+# This file tells CodeRabbit how to review our code
+# We are customizing it to win the "Captain Code" award
+
+reviews:
+  # Enable high-level summaries so judges can read what changed quickly
+  high_level_summary: true
+  
+  # Enable the poem because it's fun and shows personality in the video
+  poem: true
+  
+  # Auto-review every Pull Request
+  auto_review:
+    enabled: true
+
+  # "Best Practices" Instructions for the AI
+  instructions: |
+    You are a senior code reviewer helping us win a hackathon.
+    
+    Your focus is:
+    1. **Code Quality**: Point out any messy logic or unused variables.
+    2. **Documentation**: If we add a new function, ensure we added comments explaining it.
+    3. **Security**: Warn us if we accidentally commit an API key.
+    
+    If the code looks good, reply with "Captain Code approves! 🏴‍☠️"
