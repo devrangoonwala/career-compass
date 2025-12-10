@@ -1,0 +1,40 @@
+DEV RANGOONWALA
++91 886668-3569 |www.github.com/devrangoonwala | Surat, Gujarat - 395017 | www.linkedin.com/in/devrangoonwala
+EDUCATION
+AURO UNIVERSITY , Surat, India
+BS in Information Technology May 2017 – Jun 2020
+● Coursework: Programming using 'C', Fundamental of Computer Organization, Fundamental of Statistics, Introduction to Microprocessor and
+Digital Electronics, Fundamentals of Mathematics, Data Structure using 'C', System Analysis & Design, Database Management System, Object
+Oriented Programming with C++, Management Information System, RDBMS, Internet Concepts and Web Designing, Operating Systems,
+Java Programming, Computer Networks, ASP .Net, Business Intelligence, Analysis and Design of Algorithms, Android Programming, Computer
+Graphics, Software Engineering, Information & Cyber Security, Python Programming
+● Volunteered for Gujarat Industrial Hackathon as Lead Assistant
+● Student Researcher working on Deep Learning based Object detection for driver assistance system for Indian road scenarios with Dr. Bhaumik
+Vaidya (Dec 2019)
+PROFESSIONAL EXPERIENCE
+TECHNOINC AI SERVICES LLP - IT SOLUTIONS COMPANY Data Science Intern Surat, India
+Dec 2019 – Jun 2020
+● Developed and implemented a convolutional neural network (CNN) based model for real-time traffic sign detection and classification using
+Python and TensorFlow.
+● Collected and preprocessed a diverse dataset of traffic sign images, including augmentation techniques to enhance model generalization and
+robustness.
+● Provided technical leadership and mentorship to junior team members, sharing best practices, code reviews, and constructive feedback to foster
+a culture of continuous learning and professional growth.
+S. V. NATIONAL INSTITUTE OF TECHNOLOGY - IOT WORKSHOP Software Engineer Surat, India
+Dec 2020 – Dec 2020
+● Designed and developed software modules for a robotics project, focusing on areas such as motion planning, sensor integration, and control
+algorithms.
+● Collaborated closely with cross-functional teams including hardware engineers and robotics specialists to architect and implement software
+solutions that meet project requirements and specifications.
+● Hands on practice upon building a remote car starting with hardware till ending up with coding to give commands to the car in C programming.
+PROJECTS
+TRAFFIC SIGN DETECTION AND RECOGNITION ● Research Assistant in Ph.D. based Project, which helps several vehicles detect signs and help them navigate into clear roadways
+LICENSES & CERTIFICATIONS
+Dec 2019 – Jun 2020
+● Programming in Python- Coursera
+● CS213.3x: Algorithms- Indian Institute of Technology, Bombay
+● Fundamentals of JavaScript- W3Schools
+● iOS 17 Development Essential Training- LinkedIn
+● NumPy Fundamentals (Python Library for Data Science)- Udemy
+SKILLS
+Programming: Java, C, C++, MySQL, HTML, CSS, Javascript, Python, Sw
