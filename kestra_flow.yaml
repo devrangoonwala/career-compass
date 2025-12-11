@@ -1,0 +1,37 @@
+id: career_compass_logic
+namespace: company.team
+description: "Job Filter (Unbreakable Version)"
+
+inputs:
+  - id: groq_api_key
+    type: STRING
+    defaults: "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" 
+
+tasks:
+  # 1. Fetch Data 
+  - id: fetch_jobs
+    type: io.kestra.plugin.core.http.Request
+    uri: "https://jsonplaceholder.typicode.com/posts/1" 
+    method: GET
+
+  # 2. AI Analysis 
+  - id: analyze_jobs
+    type: io.kestra.plugin.core.http.Request
+    uri: "https://api.groq.com/openai/v1/chat/completions"
+    method: POST
+    contentType: "application/json"
+    headers:
+      Authorization: "Bearer {{ inputs.groq_api_key }}"
+    body: 
+      model: "llama-3.3-70b-versatile"
+      messages:
+        - role: "system"
+          content: "You are a helper bot."
+        - role: "user"
+          
+          content: "I just successfully downloaded data from {{ outputs.fetch_jobs.uri }}. Say 'Data Downloaded Successfully' and give me a thumbs up."
+
+  # 3. Print Result
+  - id: log_result
+    type: io.kestra.plugin.core.log.Log
+    message: "FINAL RESULT: {{ outputs.analyze_jobs.body }}"
