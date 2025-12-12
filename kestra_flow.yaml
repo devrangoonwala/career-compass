@@ -5,7 +5,6 @@ description: "Job Filter (Unbreakable Version)"
 inputs:
   - id: groq_api_key
     type: STRING
-    defaults: "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" 
 
 tasks:
   # 1. Fetch Data 
