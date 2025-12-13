@@ -1,124 +1,174 @@
-# Career Compass: AI-Powered Job Filtering & Analysis
+# 🧭 Career Compass: The Autonomous Job Agent
 
-Career Compass is an innovative project designed to streamline the job application process by leveraging AI and automation. It allows users to upload their resumes (PDF, DOCX, or TXT) and receive instant, intelligent analysis, job matching, and workflow orchestration.
+**"I stopped searching for jobs. I built a robot to do it for me."**
 
-## Features
+Career Compass is an intelligent multi-agent system that automates the job hunt. Instead of scrolling through thousands of generic listings, you simply drag-and-drop your resume, and the agent orchestrates a complex pipeline to find, filter, and rank jobs that match your specific skills and salary expectations.
 
-- **AI-Powered Skill Extraction (Cline):** Automatically identifies key skills from your resume.
-- **Oumi Inference Engine Integration:** Performs in-depth model analysis on your resume to assess job fit and confidence.
-- **Kestra Workflow Orchestration:** Manages a pipeline of tasks, including data fetching, AI analysis, and result logging.
-- **CodeRabbit Code Quality Checks:** Ensures high code quality throughout the project.
-- **Vercel API Endpoints:** Provides seamless integration for all backend services and external APIs.
-- **Interactive Web Interface:** A user-friendly drag-and-drop interface for resume uploads and result visualization.
+---
 
-## Project Structure
+## 🎥 Demo Video
+
+> 📹 *[Watch the 2-minute walkthrough](YOUR_VIDEO_LINK_HERE)*
+
+---
+
+## 🏗️ The "Avengers" Tech Stack
+
+This project isn't just a script; it's a complete ecosystem built using 5 cutting-edge AI technologies.
+
+| Technology | Role | The "Why" |
+|------------|------|-----------|
+| 🟣 **Cline** | The Architect | Built the entire CLI automation tool (`compass_cli.py`) and the frontend logic using autonomous coding agents. |
+| 🟢 **Kestra** | The Manager | Orchestrates the daily data pipeline. It wakes up, fetches raw job data, and pipes it to the AI analysis layer. |
+| 🔴 **Oumi** | The Judge | A custom Fine-Tuned Model (LLM) trained on my specific salary/culture preferences to "grade" job descriptions. |
+| 🔵 **Vercel** | The Face | Hosts the "Apple-style" minimalist dashboard, ensuring the tool is accessible from any device. |
+| 🟡 **CodeRabbit** | The Auditor | Automatically reviewed every Pull Request to ensure security best practices and clean code. |
+
+---
+
+## 🧠 How It Works (The Architecture)
 
 ```
-.github/
-├── workflows/           # GitHub Actions workflows
-├── PULL_REQUEST_TEMPLATE.md
-.env.example             # Example environment variables
-.gitignore               # Files ignored by Git
-.vercelignore             # Files ignored by Vercel deployments
-AWARD_CRITERIA.md        # Criteria for project awards (if applicable)
-cline_workflow.js        # Cline (AI) related workflow logic
-compass_cli.py           # Command-line interface for Career Compass
-CONTRIBUTING.md          # Guidelines for contributions
-index.html               # Main web application interface
-kestra_flow.yaml         # Kestra workflow definition
-oumi_contribution.md     # Oumi (AI) related contribution guidelines
-oumi_train.yaml          # Oumi (AI) training configurations
-package.json             # Node.js project dependencies
-README.md                # Project README file
-requirements.txt         # Python project dependencies
-resume.txt               # Example resume file
-salary_data.csv          # Sample salary data for analysis
-salary_data.txt          # Sample salary data for analysis
-SECURITY.md              # Security guidelines
-train_model.py           # Script for training AI models
-api/
-├── analyze.js           # API endpoint for combined analysis
-├── coderabbit.js        # API endpoint for CodeRabbit integration
-├── kestra.js            # API endpoint for Kestra integration
-└── oumi.js              # API endpoint for Oumi integration
-mlruns/                  # MLflow experiment tracking data
-oumi-training/           # Oumi model training resources
-output/                  # Output directory
-wandb/                   # Weights & Biases experiment tracking data
+[Resume Input] → [Together AI Extraction] → [Kestra Orchestrator] → [Oumi "Verdict" Model] → [Vercel Dashboard]
 ```
 
-## Setup Instructions
+1. **Ingestion**: The user drags a `resume.txt` or `.pdf` into the web interface.
+2. **Extraction**: An AI agent parses the unstructured text to extract key skills (e.g., "Python", "React").
+3. **Orchestration**: Kestra triggers the workflow, simulating a fetch of live job data from external sources.
+4. **Judgment**: The data is passed to a custom Oumi-trained model. This model doesn't just look for keywords; it looks for **fit**. (e.g., "Is this salary >$150k? Is it Remote?").
+5. **Presentation**: The filtered, high-quality matches are displayed on the Vercel dashboard.
+6. **Action**: Clicking "Apply" instantly generates a deep-link search for the specific application page.
+
+---
+
+## ⚡ Features
+
+### 1. Resume-Aware Search
+Drop your resume, and the system dynamically updates its search criteria. No more manual filter setting.
+
+### 2. The "Oumi Verdict"
+Most job sites give you "Matches." Career Compass gives you a **Verdict**. We trained a custom model to classify jobs as **GOOD** or **BAD** based on nuanced criteria like "unpaid overtime" or "vague salary ranges."
+
+### 3. Command Center CLI
+Includes a custom-built CLI tool (`compass_cli.py`) for managing the agent backend:
+- **Option 1**: Verifies Oumi training artifacts.
+- **Option 2**: Manually triggers Kestra workflows.
+- **Option 3**: Checks system health status.
+
+---
+
+## 🛠️ Installation & Setup
+
+Want to run the backend yourself? Follow these steps.
 
 ### Prerequisites
+- Docker (for Kestra)
+- Python 3.10+
+- Node.js (for Vercel)
 
-- Git
-- Node.js (for frontend and API endpoints)
-- Python 3.x (for AI/ML components)
-- `npm` or `yarn` (for Node.js package management)
-- `pip` (for Python package management)
+### 1. Start the Orchestrator (Kestra)
 
-### Installation
+```bash
+docker run --pull=always --rm -it -p 8080:8080 --user=root \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /tmp:/tmp kestra/kestra:latest server local
+```
 
-1. **Clone the repository:**
+Access the UI at `http://localhost:8080`
 
-   ```bash
-   git clone https://github.com/devrangoonwala/career-compass.git
-   cd career-compass
-   ```
+### 2. Verify the AI Brain (CLI)
 
-2. **Install Node.js dependencies:**
+```bash
+# Activate env
+conda activate hackathon
 
-   ```bash
-   npm install
-   # or yarn install
-   ```
+# Run the Command Center
+python compass_cli.py
+```
 
-3. **Install Python dependencies:**
+### 3. Deploy the Frontend
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+npx vercel --prod
+```
 
-4. **Environment Variables:**
+---
 
-   Copy `.env.example` to `.env` and fill in any required API keys (e.g., Groq API key for AI inference) and other configurations. **Do not commit your `.env` file to version control.**
+## 🏆 Hackathon Tracks & Eligibility
 
-   ```bash
-   cp .env.example .env
-   ```
+This project was built specifically for **AI Agents Assemble 2024**.
 
-## Usage
+- [x] **Infinity Build (Cline)**: Used Cline to generate the `compass_cli.py` tool and complex frontend logic.
+- [x] **Wakanda Data (Kestra)**: Implemented `kestra_flow.yaml` to fetch and summarize job data using Llama-3 (via Groq).
+- [x] **Iron Intelligence (Oumi)**: Trained a custom text-classification model (`output/salary_model`) to judge job quality.
+- [x] **Stormbreaker (Vercel)**: Deployed a production-ready, responsive web app.
+- [x] **Captain Code (CodeRabbit)**: Repository includes `.coderabbit.yaml` and active PR reviews.
 
-1. **Start the development server:**
+---
 
-   This project is designed to be deployed on Vercel, but you can run the API endpoints locally using Node.js:
+## 📁 Project Structure
 
-   ```bash
-   npm run start
-   ```
+```
+career-compass/
+├── compass_cli.py          # CLI tool for managing backend
+├── kestra_flow.yaml        # Kestra workflow definition
+├── output/
+│   └── salary_model/       # Custom Oumi fine-tuned model
+├── frontend/               # Vercel-hosted web dashboard
+├── .coderabbit.yaml        # CodeRabbit configuration
+└── README.md               # You are here!
+```
 
-   For the full experience, it is recommended to deploy to Vercel.
+---
 
-2. **Open `index.html` in your browser:**
+## 🚀 Usage
 
-   The main application interface is `index.html`. You can open it directly in your web browser to start using Career Compass.
+### Running the Full Pipeline
 
-3. **Upload your Resume:**
+1. **Start Kestra** (see Installation step 1)
+2. **Upload your resume** to the web interface
+3. **Watch the magic happen** as jobs are fetched, analyzed, and filtered
+4. **Review your matches** on the dashboard
 
-   Drag and drop your resume (PDF, DOCX, or TXT) into the designated area on the web interface. The system will automatically process and analyze your resume.
+### Using the CLI
 
-4. **Review Job Matches:**
+```bash
+python compass_cli.py
+```
 
-   After analysis, the dashboard will display top job matches and relevant insights based on your skills and the AI's assessment.
+Follow the interactive prompts to:
+- Verify model training status
+- Trigger workflows manually
+- Check system health
 
-## Contributing
+---
 
-We welcome contributions to Career Compass! Please refer to `CONTRIBUTING.md` for guidelines on how to contribute.
+## 🤝 Contributing
 
-## Security
+This project is open-source. Code quality is enforced by **CodeRabbit**.
 
-For information on security practices and how to report vulnerabilities, please see `SECURITY.md`.
+1. Fork the repo
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a PR (and watch CodeRabbit review it automatically!)
 
-## License
+---
 
-This project is licensed under the [MIT License](LICENSE).
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- **Cline** for autonomous code generation
+- **Kestra** for workflow orchestration
+- **Oumi** for custom model training
+- **Vercel** for seamless deployment
+- **CodeRabbit** for code quality assurance
+
+---
+
+⭐ **If this project helped you, please give it a star!** ⭐
