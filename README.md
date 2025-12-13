@@ -171,14 +171,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 📧 Contact
-
-Built with ☕ and 🤖 by **[Your Name]**
-
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
-- Email: your.email@example.com
-
----
-
 ⭐ **If this project helped you, please give it a star!** ⭐
