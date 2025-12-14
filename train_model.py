@@ -14,6 +14,8 @@ from transformers import (
 )
 from datasets import load_dataset
 from rich.console import Console
+from rich.panel import Panel
+from rich.table import Table
 
 console = Console()
 
@@ -43,16 +45,64 @@ def tokenize_dataset(dataset, tokenizer):
     tokenized = dataset.map(tokenize_function, batched=True, remove_columns=["text"])
     return tokenized
 
+def display_config(config):
+    """Display Oumi training configuration in a formatted table"""
+    console.print("\n[bold cyan]╔════════════════════════════════════════════════════════════╗[/bold cyan]")
+    console.print("[bold cyan]║[/bold cyan] [bold white]Oumi Training Model Configuration[/bold white]                    [bold cyan]║[/bold cyan]")
+    console.print("[bold cyan]╚════════════════════════════════════════════════════════════╝[/bold cyan]\n")
+    
+    # Model Configuration Table
+    model_table = Table(show_header=True, header_style="bold magenta", box=None)
+    model_table.add_column("Model Setting", style="cyan", width=30)
+    model_table.add_column("Value", style="green", width=40)
+    
+    model_table.add_row("Model Name", config["model"]["model_name"])
+    model_table.add_row("Trust Remote Code", str(config["model"].get("trust_remote_code", False)))
+    
+    console.print(Panel(model_table, title="[bold]Model Configuration[/bold]", border_style="cyan"))
+    console.print()
+    
+    # Training Configuration Table
+    train_table = Table(show_header=True, header_style="bold magenta", box=None)
+    train_table.add_column("Training Setting", style="cyan", width=30)
+    train_table.add_column("Value", style="green", width=40)
+    
+    train_config = config["training"]
+    train_table.add_row("Output Directory", train_config["output_dir"])
+    train_table.add_row("Learning Rate", str(train_config["learning_rate"]))
+    train_table.add_row("Epochs", str(train_config["num_train_epochs"]))
+    train_table.add_row("Batch Size", str(train_config["per_device_train_batch_size"]))
+    train_table.add_row("Optimizer", train_config.get("optimizer", "adamw_torch"))
+    train_table.add_row("Save Steps", str(train_config["save_steps"]))
+    train_table.add_row("DataLoader Workers", str(train_config["dataloader_num_workers"]))
+    
+    console.print(Panel(train_table, title="[bold]Training Configuration[/bold]", border_style="cyan"))
+    console.print()
+    
+    # Dataset Configuration Table
+    data_table = Table(show_header=True, header_style="bold magenta", box=None)
+    data_table.add_column("Dataset Setting", style="cyan", width=30)
+    data_table.add_column("Value", style="green", width=40)
+    
+    data_config = config["data"]["train"]["datasets"][0]
+    data_table.add_row("Dataset Name", data_config["dataset_name"])
+    data_table.add_row("Dataset Path", data_config["dataset_path"])
+    data_table.add_row("Split", data_config["split"])
+    
+    console.print(Panel(data_table, title="[bold]Dataset Configuration[/bold]", border_style="cyan"))
+    console.print("\n[bold yellow]Starting training with above configuration...[/bold yellow]\n")
+
 def main():
     console.print("[info]Starting model training...[/info]")
     
     # Load configuration
     config = load_config()
+    
+    # Display Oumi training configuration
+    display_config(config)
+    
     model_name = config["model"]["model_name"]
     output_dir = config["training"]["output_dir"]
-    
-    console.print(f"[info]Model: {model_name}[/info]")
-    console.print(f"[info]Output directory: {output_dir}[/info]")
     
     # Load tokenizer and model
     console.print("[info]Loading tokenizer and model...[/info]")
