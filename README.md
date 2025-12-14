@@ -1,4 +1,4 @@
-# Career Compass
+# Career Compass - AI-powered job matching system
 
 AI-powered job matching system that intelligently connects candidates with opportunities using advanced ML models and workflow automation.
 
