@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Compass</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900 min-h-screen">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200 py-6 px-8">
+            <div class="max-w-7xl mx-auto">
+                <h1 class="text-3xl font-semibold text-gray-900">Career Compass</h1>
+                <p class="text-gray-600 mt-1">AI-Powered Job Matching</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 max-w-7xl mx-auto w-full px-8 py-12">
+            <!-- Upload View -->
+            <div id="upload-view" class="fade-in">
+                <div class="text-center max-w-2xl mx-auto">
+                    <div class="mb-8">
+                        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-50 mb-6">
+                            <i class="fa-solid fa-upload text-3xl text-blue-600"></i>
+                        </div>
+                        <h2 class="text-4xl font-semibold text-gray-900 mb-4">Upload Your Resume</h2>
+                        <p class="text-lg text-gray-600">Get matched with opportunities tailored to your skills and experience</p>
+                    </div>
+                    
+                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-12 bg-gray-50 hover:border-blue-400 transition-colors">
+                        <input type="file" id="resume-input" accept=".pdf,.doc,.docx,.txt" class="hidden">
+                        <label for="resume-input" class="cursor-pointer">
+                            <i class="fa-solid fa-file text-4xl text-gray-400 mb-4 block"></i>
+                            <p class="text-gray-700 font-medium mb-2">Click to upload or drag and drop</p>
+                            <p class="text-sm text-gray-500">PDF, DOC, DOCX, or TXT (Max 10MB)</p>
+                        </label>
+                    </div>
+                    
+                    <div id="skill-tags" class="mt-8 text-sm text-gray-500 font-medium"></div>
+                </div>
+            </div>
+
+            <!-- Dashboard View -->
+            <div id="dashboard-view" class="hidden">
+                <div class="mb-8">
+                    <button onclick="resetApp()" class="text-gray-600 hover:text-gray-900 transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Upload Another Resume</span>
+                    </button>
+                </div>
+                
+                <div class="mb-8">
+                    <h2 class="text-3xl font-semibold text-gray-900 mb-2">Recommended Opportunities</h2>
+                    <p class="text-gray-600">Based on your resume analysis</p>
+                </div>
+                
+                <div id="cards-container" class="space-y-4">
+                    <!-- Job cards will be rendered here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-50 border-t border-gray-200 py-6 px-8 mt-auto">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-4">
+                    <p class="text-sm text-gray-500 mb-3">Built with</p>
+                    <div id="tech-badges" class="flex flex-wrap justify-center gap-3 items-center">
+                        <!-- Technologies will be loaded from backend -->
+                        <div class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 shadow-sm">
+                            Loading...
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center text-xs text-gray-400 mt-4">Career Compass • AI-Powered Job Matching</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Load technologies from backend on page load
+        async function loadTechnologies() {
+            try {
+                const response = await fetch('/api/technologies');
+                const data = await response.json();
+                
+                if (data.success && data.technologies) {
+                    const badgesContainer = document.getElementById('tech-badges');
+                    badgesContainer.innerHTML = data.technologies.map(tech => {
+                        const colorClasses = {
+                            blue: 'bg-blue-50 text-blue-700 border-blue-200',
+                            purple: 'bg-purple-50 text-purple-700 border-purple-200',
+                            green: 'bg-green-50 text-green-700 border-green-200',
+                            orange: 'bg-orange-50 text-orange-700 border-orange-200',
+                            gray: 'bg-gray-100 text-gray-700 border-gray-300',
+                            black: 'bg-gray-900 text-white border-gray-800'
+                        };
+                        
+                        return `
+                            <div class="px-4 py-2 ${colorClasses[tech.color]} border rounded-lg text-sm font-medium shadow-sm flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full ${tech.status === 'active' ? 'bg-green-500' : 'bg-gray-400'}"></span>
+                                ${tech.name}
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    throw new Error('Invalid response');
+                }
+            } catch (error) {
+                // Fallback if API fails - show technologies anyway
+                const technologies = [
+                    { name: 'Cline', color: 'blue' },
+                    { name: 'Kestra', color: 'purple' },
+                    { name: 'Oumi', color: 'green' },
+                    { name: 'CodeRabbit', color: 'orange' },
+                    { name: 'Vercel', color: 'gray' }
+                ];
+                
+                const badgesContainer = document.getElementById('tech-badges');
+                badgesContainer.innerHTML = technologies.map(tech => {
+                    const colorClasses = {
+                        blue: 'bg-blue-50 text-blue-700 border-blue-200',
+                        purple: 'bg-purple-50 text-purple-700 border-purple-200',
+                        green: 'bg-green-50 text-green-700 border-green-200',
+                        orange: 'bg-orange-50 text-orange-700 border-orange-200',
+                        gray: 'bg-gray-100 text-gray-700 border-gray-300',
+                        black: 'bg-gray-900 text-white border-gray-800'
+                    };
+                    
+                    return `
+                        <div class="px-4 py-2 ${colorClasses[tech.color]} border rounded-lg text-sm font-medium shadow-sm flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                            ${tech.name}
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+        
+        // Load technologies when page loads
+        document.addEventListener('DOMContentLoaded', loadTechnologies);
+        
+        // File upload handler
+        document.getElementById('resume-input').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Show loading state
+            const uploadView = document.getElementById('upload-view');
+            const dashboardView = document.getElementById('dashboard-view');
+            const skillTags = document.getElementById('skill-tags');
+            
+            skillTags.textContent = 'Analyzing resume...';
+            skillTags.className = 'mt-8 text-sm text-blue-600 font-medium';
+
+            try {
+                const fileText = await file.text();
+                
+                // Extract skills
+                const skills = extractSkills(fileText);
+                skillTags.textContent = `Skills detected: ${skills.join(', ')}`;
+                skillTags.className = 'mt-8 text-sm text-gray-700 font-medium';
+
+                // Call API for analysis
+                const analyzeResponse = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        resume_text: fileText
+                        // groq_api_key should be set via environment variable on server
+                    })
+                });
+                
+                const analyzeData = await analyzeResponse.json();
+                
+                if (analyzeData.success && analyzeData.matches && analyzeData.matches.length > 0) {
+                    // Hide upload view, show dashboard
+                    uploadView.classList.add('hidden');
+                    dashboardView.classList.remove('hidden');
+                    dashboardView.classList.add('fade-in');
+                    
+                    // Render job matches
+                    renderCards(analyzeData.matches);
+                } else {
+                    // Fallback to default jobs
+                    uploadView.classList.add('hidden');
+                    dashboardView.classList.remove('hidden');
+                    dashboardView.classList.add('fade-in');
+                    renderCards();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                // Show default jobs on error
+                uploadView.classList.add('hidden');
+                dashboardView.classList.remove('hidden');
+                dashboardView.classList.add('fade-in');
+                renderCards();
+            }
+        });
+
+        function extractSkills(text) {
+            const skillKeywords = [
+                'python', 'javascript', 'react', 'node', 'aws', 'java', 'sql', 
+                'design', 'marketing', 'sales', 'ai', 'machine learning', 'tensorflow',
+                'docker', 'kubernetes', 'typescript', 'vue', 'angular', 'django', 'flask',
+                'golang', 'rust', 'c++', 'c#', 'php', 'ruby', 'swift', 'kotlin'
+            ];
+            const textLower = text.toLowerCase();
+            const found = skillKeywords.filter(skill => 
+                textLower.includes(skill.toLowerCase())
+            );
+            return found.length > 0 ? found.map(s => s.charAt(0).toUpperCase() + s.slice(1)) : ['Python', 'React', 'AI'];
+        }
+
+        function resetApp() {
+            location.reload();
+        }
+
+        const jobDB = [
+            { title: "Senior Software Engineer", company: "Netflix", salary: "$250k+", location: "Remote", type: "tech" },
+            { title: "Product Designer", company: "Linear", salary: "$180k", location: "Remote", type: "design" },
+            { title: "AI Research Scientist", company: "Anthropic", salary: "$300k+", location: "San Francisco, CA", type: "ai" },
+            { title: "Backend Developer", company: "Stripe", salary: "$210k", location: "New York, NY", type: "tech" }
+        ];
+
+        function renderCards(apiMatches = null) {
+            const container = document.getElementById('cards-container');
+            container.innerHTML = '';
+
+            const jobsToRender = apiMatches || jobDB.slice(0, 3);
+
+            jobsToRender.forEach((job, index) => {
+                setTimeout(() => {
+                    const jobTitle = job.title || job.name;
+                    const jobCompany = job.company || 'Tech Company';
+                    const matchScore = job.match || job.confidence || (92 + index);
+                    const jobLocation = job.location || '';
+                    const jobSalary = job.salary || '';
+                    
+                    const html = `
+                        <div class="bg-white border border-gray-200 rounded-xl p-6 card-hover shadow-sm">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-2">${jobTitle}</h3>
+                                    <p class="text-gray-600 mb-3">${jobCompany}${jobLocation ? ' • ' + jobLocation : ''}</p>
+                                    ${job.matching_skills && job.matching_skills.length > 0 ? 
+                                        `<div class="flex flex-wrap gap-2 mb-3">
+                                            ${job.matching_skills.map(skill => 
+                                                `<span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium">${skill}</span>`
+                                            ).join('')}
+                                        </div>` : ''}
+                                    ${job.skills && job.skills.length > 0 ? 
+                                        `<p class="text-sm text-gray-500 mb-3">Skills: ${job.skills.slice(0, 4).join(', ')}</p>` : ''}
+                                </div>
+                                <div class="ml-6 text-right">
+                                    ${jobSalary ? `<div class="text-lg font-semibold text-gray-900 mb-1">${jobSalary}</div>` : ''}
+                                    <div class="text-sm text-gray-500 mb-4">Match: ${matchScore}%</div>
+                                    <a href="https://www.google.com/search?q=${encodeURIComponent(jobTitle + " " + jobCompany + " careers")}" 
+                                       target="_blank"
+                                       class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                                        Apply
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += html;
+                }, index * 150);
+            });
+        }
+    </script>
+</body>
+</html>

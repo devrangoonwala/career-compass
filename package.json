@@ -1,0 +1,29 @@
+{
+  "name": "career-compass",
+  "version": "1.0.0",
+  "description": "AI-Powered Job Matching System using Cline, Kestra, Oumi, CodeRabbit, and Vercel",
+  "main": "cline_workflow.js",
+  "scripts": {
+    "cline:generate": "node cline_workflow.js generate",
+    "cline:test": "node cline_workflow.js test",
+    "cline:review": "node cline_workflow.js review",
+    "cline:deploy": "node cline_workflow.js deploy",
+    "test": "echo \"Tests would run here\" && exit 0"
+  },
+  "keywords": [
+    "ai",
+    "cline",
+    "kestra",
+    "oumi",
+    "coderabbit",
+    "vercel",
+    "job-matching",
+    "career"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
+

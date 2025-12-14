@@ -1,0 +1,10 @@
+Job: Salary $200k remote. Verdict: good
+Job: Unpaid internship 5 years exp. Verdict: bad
+Job: Competitive salary equity. Verdict: bad
+Job: $150k - $180k Senior Dev. Verdict: good
+Job: Entry level $40k on-site. Verdict: bad
+Job: Senior Engineer $250k. Verdict: good
+Job: Volunteer position. Verdict: bad
+Job: $100/hr contract. Verdict: good
+Job: Exposure only no pay. Verdict: bad
+Job: Director of Engineering $300k. Verdict: good
