@@ -262,6 +262,7 @@ MIT
 
 ## Acknowledgments
 
+- **WeMakeDevs** - Special thanks for offering this opportunity to work on the AI Agents Assemble 2025 hackathon
 - **Cline** for autonomous code generation
 - **Kestra** for workflow orchestration
 - **Oumi** for custom model training
