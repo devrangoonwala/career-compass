@@ -41,7 +41,3 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# Screenshots (keep directory, but ignore large files if needed)
-# screenshots/*.png
-# screenshots/*.jpg

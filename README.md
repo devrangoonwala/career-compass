@@ -13,28 +13,6 @@ Career Compass analyzes resumes, extracts skills, and matches candidates with re
 - **Workflow Automation** - Automated pipeline orchestration
 - **Real-time Dashboard** - Interactive interface for job discovery
 
-## Screenshots
-
-### Web Interface
-![Career Compass Web Interface](screenshots/web-interface.png)
-*Clean, minimal white theme with professional Apple fonts - Resume upload interface*
-
-### Kestra Workflow Topology
-![Kestra Workflow Topology](screenshots/kestra-topology.png)
-*Kestra workflow visualization showing the 3-task pipeline: fetch_jobs → analyze_jobs → log_result*
-
-### Kestra Workflow Execution
-![Kestra Workflow Execution](screenshots/kestra-execution.png)
-*Successful workflow execution logs showing all tasks completed with AI analysis results*
-
-### CLI Interface
-![CLI Interface](screenshots/cli-interface.png)
-*Career Compass CLI showing training progress and interactive menu options*
-
-### Oumi Training Configuration
-![Oumi Training Configuration](screenshots/oumi-training-config.png)
-*Oumi training model configuration display showing model, training, and dataset settings*
-
 ## Tech Stack
 
 - **Cline** - Autonomous coding workflows
