@@ -27,7 +27,6 @@ tasks:
         - role: "system"
           content: "You are a helper bot."
         - role: "user"
-          
           content: "I just successfully downloaded data from {{ outputs.fetch_jobs.uri }}. Say 'Data Downloaded Successfully' and give me a thumbs up."
 
   # 3. Print Result
